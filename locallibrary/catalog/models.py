@@ -33,7 +33,7 @@ class Book(models.Model):
     title=models.CharField(max_length=200)
     #We are using ForeignKey to map the one-to-many relationship ,we are specifying author as text right now as it hasnt been specified yet
     author = models.ForeignKey("Author",on_delete=models.RESTRICT,null=True) #on_delete=models.Restrict which will prevent the book's associated author being deleted if it is referenced by any book.
-    isbn=models.CharField("ISBN", max_length=13,help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn>ISBN number</a>"')
+    isbn=models.CharField("ISBN", max_length=13,help_text='13 Character')
     summary=models.TextField(max_length=1000,help_text="Enter brief description of the book")
 
     language=models.ForeignKey("Language",null=True, blank=True ,on_delete=models.SET_NULL)
@@ -46,6 +46,13 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("book-detail",args=[str(self.id)])
+
+    #creating this display function to add in BookAdmin 
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = 'Genre'
 
 class BookInstance(models.Model):
     #book instance represent physical copy of a book
