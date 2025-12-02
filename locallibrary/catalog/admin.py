@@ -20,6 +20,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
                  ('Availability',{'fields':('status','due_back')})]
    
     
+
 class BookInline(admin.TabularInline):
     model = Book
 

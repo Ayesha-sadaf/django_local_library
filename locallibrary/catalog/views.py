@@ -1,4 +1,34 @@
 from django.shortcuts import render
+from .models import Author,Book,BookInstance,Genre
+
 def index(request):
-    return render(request, 'This is catalog index page.')
+    'View funcrion for home page of the site'
+
+    #Generating count of some main objects
+    num_books=Book.objects.all().count()
+    num_instances=BookInstance.objects.all().count()
+
+    #Count of available book instances
+    available_instances = BookInstance.objects.filter(status__exact='a').count()
+
+    num_author=Author.objects.count()
+    num_genres=Genre.objects.filter(name__contains='Self-Help').count()
+    num_books_self_help=Book.objects.filter(summary__contains='Self Help').count()
+    context={
+        "num_books":num_books,
+        "num_instances":num_instances,
+        "available_instances":available_instances,
+        "num_author":num_author,
+        "num_self_help":num_genres,
+        "num_books_self_help":num_books_self_help
+
+    }
+
+    return render(request,'index.html',context=context)
+
+
+
+
+
+
 
