@@ -1,0 +1,20 @@
+{%extends "base_index.html"%}
+{% block title %}
+  <title>{{author.first_name}} {{author.last_name}}</title>
+{%endblock%}
+{%block content%}
+<h1>{{author.first_name}} {{author.last_name}}</h1>
+({{author.dob}}-{{author.dod}})
+
+  <p><strong>BOOKS:</strong>
+    <ol>
+    {% for books in author.book_set.all %}
+    <li>
+        <a href="{{books.get_absolute_url}}">{{books.title}}</a> 
+        <p><strong>Genre:</strong> {{ books.genre.all|join:", " }}</p> 
+        {{ books.summary }}
+    </li>
+    {%endfor%}
+</ol>
+  
+{% endblock %}
