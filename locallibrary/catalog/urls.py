@@ -6,6 +6,9 @@ urlpatterns = [
     path('books/',views.BookListView.as_view(),name='book'),
     path('books/<int:pk>',views.BookDetailView.as_view() ,name="book-detail"),
     path('authors/',views.AuthorListView.as_view(),name='authors'),
-    path('authors/<int:pk>',views.AuthorDetailView.as_view(),name='author-detail')
+    path('authors/<int:pk>',views.AuthorDetailView.as_view(),name='author-detail'),
+    path('mybooks/',views.BooksLoanedByUser.as_view(),name='my-borrowed'),
+    path('allbooksloaned/',views.AllBooksLoanedByUser.as_view(),name='all-borrowed'),
+    
 
 ]
