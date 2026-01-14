@@ -41,7 +41,7 @@
 
 
             <ul class="sidebar-nav">
-              {% if perms.catalog.can_marked_return %}
+              {% if perms.catalog.can_renew %}
                 <h4>Staff</h4>
                 <li><a href="{%url 'all-borrowed' %}">All Borrowed Books</a></li>
               {%endif%}
