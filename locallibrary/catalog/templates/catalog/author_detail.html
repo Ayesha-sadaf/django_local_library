@@ -8,13 +8,33 @@
 
   <p><strong>BOOKS:</strong>
     <ol>
-    {% for books in author.book_set.all %}
-    <li>
-        <a href="{{books.get_absolute_url}}">{{books.title}}</a> 
-        <p><strong>Genre:</strong> {{ books.genre.all|join:", " }}</p> 
-        {{ books.summary }}
-    </li>
-    {%endfor%}
+    {%if author.book_set.all%}
+      {% for books in author.book_set.all %}
+      <li>
+          <a href="{{books.get_absolute_url}}">{{books.title}}</a> 
+          <p><strong>Genre:</strong> {{ books.genre.all|join:", " }}</p> 
+          {{ books.summary }}
+      </li>
+      {%endfor%}
 </ol>
-  
+ {%else%}
+  <p>Author has no associated book yet</p>
+  {%endif%}
+{% endblock %}
+
+{% block sidebar %}
+  {{ block.super }}
+
+  {% if perms.catalog.change_author or perms.catalog.delete_author %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.catalog.change_author %}
+      <li><a href="{% url 'author-update' author.id %}">Update author</a></li>
+    {% endif %}
+    {% if perms.catalog.delete_author %}
+      <li><a href="{% url 'author-delete' author.id %}">Delete author</a></li>
+    {% endif %}
+    </ul>
+  {% endif %}
+
 {% endblock %}

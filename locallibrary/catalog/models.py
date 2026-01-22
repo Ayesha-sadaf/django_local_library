@@ -96,6 +96,7 @@ class Author(models.Model):
     class Meta:
         ordering = ['first_name','last_name']
 
+
     def get_absolute_url(self):
         return reverse("author-detail",args=[str(self.id)])
     

@@ -45,6 +45,9 @@
                 <h4>Staff</h4>
                 <li><a href="{%url 'all-borrowed' %}">All Borrowed Books</a></li>
               {%endif%}
+              {% if perms.catalog.add_author %}
+                <li><a href="{% url 'author-create' %}">Create author</a></li>
+              {%endif%}
             </ul>
             {% endblock %}
         </div>
