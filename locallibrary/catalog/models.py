@@ -48,6 +48,12 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("book-detail",args=[str(self.id)])
+    
+    @property
+    def is_available(self):
+        """Creating an attribute to know whether the book is available or not"""
+        return bool(self.bookinstance_set.filter(status='a').exists())
+    
 
     #creating this display function to add in BookAdmin 
     def display_genre(self):

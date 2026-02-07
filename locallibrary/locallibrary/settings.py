@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Add our new application
     'catalog.apps.CatalogConfig', # This object was created for us in /catalog/apps.py
+    'locallibrary_accounts_app.apps.LocallibraryAccountsAppConfig'
+    
 ]
 
 MIDDLEWARE = [

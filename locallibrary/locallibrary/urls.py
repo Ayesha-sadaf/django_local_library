@@ -25,5 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')), #delegating the url to the app specific urls.py to keep things modular and stating Include the URLs from our catalog application
     path('', RedirectView.as_view(url='catalog/',permanent=True)) , #Redirecting the '/' root URL to the catalog app ,making catalog the default page
-    path('accounts/',include('django.contrib.auth.urls'))
+    path('accounts/',include('django.contrib.auth.urls')),
+    path("accounts/", include("locallibrary_accounts_app.urls"))
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

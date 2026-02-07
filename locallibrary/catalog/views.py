@@ -42,14 +42,17 @@ def index(request):
     return render(request,'index.html',context=context)
 
 
+
+
+
 class BookListView(ListView):
     model = Book
-
     # def getquery_set(self):
     #     return Book.objects.filter(title__icontains='murder')[:5]
    
 class BookDetailView(DetailView):
     model=Book
+    
 
 class AuthorListView(ListView):
     model=Author
@@ -141,4 +144,27 @@ class AuthorDelete(PermissionRequiredMixin,DeleteView):
             return HttpResponseRedirect(reverse("author-delete", kwargs={"pk": self.object.pk}))
 
 
+class BookCreate(PermissionRequiredMixin,CreateView):
+    model =Book
+    fields=['title','author','isbn','summary','language','genre']
+    permission_required='catalog.add_book'
 
+
+class BookUpdate(PermissionRequiredMixin,UpdateView):
+    model =Book
+    fields=['title','author',' isbn','summary','language','genre']
+    permission_required='catalog.change_book'
+
+class BookDelete(PermissionRequiredMixin,DeleteView):
+    model =Book
+    fields=['title','author',' isbn','summary','language','genre']
+    permission_required='catalog.delete_book'
+
+    def form_valid(self,form):
+        try:
+            self.object.delete()
+            return HttpResponseRedirect(reverse('book'))
+        except Exception as e:
+            return HttpResponseRedirect(reverse('book-delete',kwargs={'pk':self.object.pk}))
+    
+    
