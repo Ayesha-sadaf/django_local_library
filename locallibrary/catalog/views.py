@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse ,reverse_lazy
-from catalog.forms import RenewBookForm
+from catalog.forms import RenewBookForm,BorrowBookForm
 from django.contrib.auth.decorators import login_required ,permission_required 
 
 #Function based view for homepage 
@@ -123,7 +123,7 @@ def renew_book_librarian(request,pk):
 class AuthorCreate(PermissionRequiredMixin,CreateView):
     model=Author
     fields=['first_name','last_name','dob','dod']
-    initial ={'dod':'1/12/2025'}
+    # initial ={'dod':'1/12/2025'}
     permission_required ='catalg.add_author' #default permission by django
 
 class AuthorUpdate(PermissionRequiredMixin,UpdateView):
@@ -166,5 +166,17 @@ class BookDelete(PermissionRequiredMixin,DeleteView):
             return HttpResponseRedirect(reverse('book'))
         except Exception as e:
             return HttpResponseRedirect(reverse('book-delete',kwargs={'pk':self.object.pk}))
-    
+
+class BorrowBook(PermissionRequiredMixin,UpdateView):
+    model =BookInstance
+    # fields=['borrower','due_back']
+    permission_required='catalog.assign_borrower'    
+    template_name='catalog/assign_borrower.html'
+    success_url=reverse_lazy('book')
+    form_class=BorrowBookForm
+
+    def form_valid(self,form):
+        form.instance.status='o' #assigning the status on loan for the issued book
+        return super().form_valid(form)
+
     

@@ -18,6 +18,10 @@
         class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
         {{ copy.get_status_display }}
       </p>
+
+      {%if copy.status == 'a' %}
+        <a href="{% url 'borrow-book' copy.pk %}" class="btn btn-sm btn-primary">Issue This Book </a>
+      {% endif %}
       {% if copy.status != 'a' %}
         <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
       {% endif %}

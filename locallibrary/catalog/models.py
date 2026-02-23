@@ -86,7 +86,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering =['status']
-        permissions=(('can_marked_return','set book as returned'),('can_renew','change the due back date of book'),) #permission in a tuple with the name and description
+        permissions=(('can_marked_return','set book as returned'),('can_renew','change the due back date of book'),('assign_borrower','can assign book to borrower')) #permission in a tuple with the name and description
     
     def __str__(self):
         return f'{self.id},({self.book.title})'
