@@ -1,0 +1,20 @@
+{%extends 'base_index.html%}
+{%block content%}
+<h1>Deleting book :{{book}}</h1>
+{if book.bookinstance_set.all}
+<p>Book cant be delete till its instances exist</p>
+<ul>
+    {for book in book.bookinstance_set.all}
+        <li ><a href="url 'book' book.pk">{{bookinstance}}</a>
+        ({{book.bookinstance_set.all.count}})
+        </li>
+        <li>({{book.bookinstance_set.all.count}})</li>
+    {%endfor%}
+</ul>
+{%else%}
+<p>Are you sure you want to delete this book?</p>
+<form action="" method="post">
+    {csrf_token}
+    <input type="submit" action="" value="Yes Delete">
+</form>
+{%endblock%}
